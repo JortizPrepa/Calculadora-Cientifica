@@ -1,0 +1,718 @@
+' Configuración inicial de la consola
+TextWindow.ForegroundColor = "red"
+TextWindow.WriteLine ("JUAN ALFONSO ORTIZ ALVAREZ")
+TextWindow.WriteLine ("4.TO BACO A")
+
+' Configuración de la Ventana Gráfica
+GraphicsWindow.Width = 310
+GraphicsWindow.Height = 500
+GraphicsWindow.BackgroundColor = "gray"
+GraphicsWindow.CanResize = "no"
+
+' Caja de texto
+caja = Controls.AddTextBox(35,30)
+Controls.SetSize(caja, 250, 50)
+
+proceso = Controls.AddTextBox(35,120)
+Controls.SetSize(proceso, 250, 30)
+
+' Variables de estado
+estadoSecond = 0 
+operadorSuma = 0
+operadorResta = 0
+operadorMultiplicacion = 0
+operadorDivision = 0
+operadorPotencia = 0
+OperadorParentesis = 0
+operadorraiz = 0
+operadorlogy = 0
+operadorpi = 0
+operadore = 0
+estadotrigo = 0
+operadorfracciony = 0
+operador1 = 1 
+operador2 = 1
+
+'Boton cos,sen,tan
+
+trigo = Controls.AddButton("trigonometria",130,235)
+Controls.SetSize(trigo,105,30)
+
+cos = Controls.AddButton("cos",130,275)
+Controls.SetSize(cos,50,30)
+anticos = Controls.AddButton("cos⁻¹",185,275)
+Controls.SetSize(anticos,50,30)
+
+
+sen = Controls.AddButton("sen",130,275)
+Controls.SetSize(sen,50,30)
+Controls.HideControl(sen)
+antisen= Controls.AddButton("sen⁻¹",185,275)
+Controls.SetSize(antisen,50,30)
+Controls.HideControl(antisen)
+
+tan = Controls.AddButton("tan",130,275)
+Controls.SetSize(tan,50,30)
+Controls.HideControl(tan)
+antitan= Controls.AddButton("tan⁻¹",185,275)
+Controls.SetSize(antitan,50,30)
+Controls.HideControl(antitan)
+
+
+
+' Botón activador Second
+second = Controls.AddButton("2nd", 20, 235)
+Controls.SetSize(second, 105, 30)
+
+' Boton second
+cuadrado = Controls.AddButton("x²", 20, 275)
+Controls.SetSize(cuadrado, 50, 30)
+cubo = Controls.AddButton("x³", 20, 275)
+Controls.SetSize(cubo, 50, 30)
+Controls.HideControl(cubo)
+
+raiz2 = Controls.AddButton("²√x", 20, 315)
+Controls.SetSize(raiz2, 50, 30)
+raiz3 = Controls.AddButton("³√x", 20, 315)
+Controls.SetSize(raiz3, 50, 30)
+Controls.HideControl(raiz3)
+
+potencia = Controls.AddButton("xʸ", 20, 355)
+Controls.SetSize(potencia, 50, 30)
+raizy = Controls.AddButton("ʸ√x", 20, 355)
+Controls.SetSize(raizy, 50, 30)
+Controls.HideControl(raizy)
+
+potenciadies = Controls.AddButton("10ˣ",20,395)
+Controls.SetSize(potenciadies,50,30)
+potenciados = Controls.AddButton("2ˣ",20,395)
+Controls.SetSize(potenciados,50,30)
+Controls.HideControl(potenciados)
+
+log = Controls.AddButton("log",20,435)
+Controls.SetSize(log,50,30)
+logyx = Controls.AddButton("logyˣ",20,435)
+Controls.SetSize(logyx,50,30)
+Controls.HideControl(logyx)
+
+ln = Controls.AddButton("ln",20,475)
+Controls.SetSize(ln,50,30)
+ex = Controls.AddButton("eˣ",20,475)
+Controls.SetSize(ex,50,30)
+Controls.HideControl(ex)
+
+fraccion = Controls.AddButton("¹/x",75,475)
+Controls.SetSize(fraccion,50,30)
+fracciony = Controls.AddButton("y/x",75,475)
+Controls.SetSize(fracciony,50,30)
+Controls.HideControl(fracciony)
+
+' Resto de botones permanentes
+
+
+C = Controls.AddButton("⌫",240,275)
+Controls.SetSize(C,50,30)
+
+CE= Controls.AddButton("CE",240,235)
+Controls.SetSize(CE,50,30)
+
+pi = Controls.AddButton("n",75,275)
+Controls.SetSize(pi,50,30)
+
+
+
+absoluto = Controls.AddButton("|x|",75,315)
+Controls.SetSize(absoluto,50,30)
+e = Controls.AddButton("e",130,315)
+Controls.SetSize(e,50,30)
+factorial = Controls.AddButton("n!",185,315)
+Controls.SetSize(factorial,50,30)
+dividido = Controls.AddButton("÷",240,315)
+Controls.SetSize(dividido,50,30)
+
+siete = Controls.AddButton("7",75,355)
+Controls.SetSize(siete,50,30)
+ocho = Controls.AddButton("8",130,355)
+Controls.SetSize(ocho,50,30)
+nueve = Controls.AddButton("9",185,355)
+Controls.SetSize(nueve,50,30)
+Multiplicar = Controls.AddButton("×",240,355)
+Controls.SetSize(Multiplicar,50,30)
+
+cuatro = Controls.AddButton("4",75,395)
+Controls.SetSize(cuatro,50,30)
+cinco= Controls.AddButton("5",130,395)
+Controls.SetSize(cinco,50,30)
+seis = Controls.AddButton("6",185,395)
+Controls.SetSize(seis,50,30)
+menos = Controls.AddButton("-",240,395)
+Controls.SetSize(menos,50,30)
+
+
+uno = Controls.AddButton("1",75,435)
+Controls.SetSize(uno,50,30)
+dos = Controls.AddButton("2",130,435)
+Controls.SetSize(dos,50,30)
+tres = Controls.AddButton("3",185,435)
+Controls.SetSize(tres,50,30)
+mas = Controls.AddButton("+",240,435)
+Controls.SetSize(mas,50,30)
+
+cero = Controls.AddButton("0",130,475)
+Controls.SetSize(cero,50,30)
+punto = Controls.AddButton(".",185,475)
+Controls.SetSize(punto,50,30)
+igual = Controls.AddButton("=",240,475)
+Controls.SetSize(igual,50,30)
+
+' evento
+Controls.ButtonClicked = AlHacerClick
+
+Sub AlHacerClick
+  ultimo_boton = Controls.LastClickedButton
+  
+  ' Lógica del botón Second
+  If ultimo_boton = second Then
+    IntercambiarBotones()
+  ElseIf ultimo_boton = trigo Then
+      IntercambiarBotones2()
+  EndIf
+  
+'Números
+  If ultimo_boton = uno Then
+    boton1()
+  ElseIf ultimo_boton = dos Then
+    boton2()
+  ElseIf ultimo_boton = tres Then
+    boton3()
+  ElseIf ultimo_boton = cuatro Then
+    boton4()
+  ElseIf ultimo_boton = cinco Then
+    boton5()
+  ElseIf ultimo_boton = seis Then
+    boton6()
+  ElseIf ultimo_boton = siete Then
+    boton7()
+  ElseIf ultimo_boton = ocho Then
+    boton8()
+  ElseIf ultimo_boton = nueve Then
+    boton9()
+  ElseIf ultimo_boton = cero Then
+    boton0()
+  EndIf
+  
+  'Especiales
+  
+  If ultimo_boton = cuadrado Then
+    botoncuadrado()
+  ElseIf ultimo_boton =  raiz2 then 
+    botonraiz2()
+  ElseIf ultimo_boton = potencia then
+    botonpotencia()
+  ElseIf ultimo_boton = potenciadies then
+    botonpotenciadies()
+  ElseIf ultimo_boton = log then
+    botonlog()
+  ElseIf ultimo_boton = ln then
+    botonln()
+  ElseIf ultimo_boton = fraccion then
+    botonfraccion()
+  ElseIf ultimo_boton = absoluto then
+    botonabsoluto()
+  ElseIf ultimo_boton = factorial then
+    botonfactorial()
+  EndIf
+  'second 
+  If ultimo_boton = cubo Then
+    botoncubo()
+  ElseIf ultimo_boton = raiz3 then
+    botonraiz3()
+  Elseif  ultimo_boton = raizy then
+    botonraizy()
+  elseif  ultimo_boton = potenciados then
+    botonpotenciados()
+  Elseif  ultimo_boton = logyx then
+    botonlogy()
+  ElseIf  ultimo_boton = ex then
+    botonex()
+  ElseIf ultimo_boton = fracciony then
+    botonfracciony()
+  EndIf
+   
+   'pi y eulet
+   
+   If ultimo_boton = pi Then
+     botonpi()
+   ElseIf ultimo_boton = e then
+     botone()
+   EndIf
+   
+   'TRIGO
+   
+   If ultimo_boton = cos Then
+     botoncos()
+   ElseIf ultimo_boton = anticos then
+     botonanticos()
+   ElseIf ultimo_boton = sen then
+     botonsen()
+   elseIf ultimo_boton = antisen then
+    botonantisen() 
+  elseIf ultimo_boton = tan then
+    botontan()
+  elseif ultimo_boton = antitan then
+    botonantitan()
+    EndIf
+  
+
+' Lógica de Operaciones Básicas
+  If ultimo_boton = mas Then
+    botonmas()
+  ElseIf ultimo_boton = menos then
+    botonresta()
+  ElseIf ultimo_boton = Multiplicar then
+    botonMultiplicacion()
+  ElseIf ultimo_boton = dividido then
+    botonDivision()
+  ElseIf ultimo_boton = CE then
+    botonBT()
+  elseif ultimo_boton = C then  
+    botonC()
+  ElseIf ultimo_boton = igual then  
+    botonIgual()
+  ElseIf ultimo_boton = punto then
+    botonpunto()
+  EndIf
+EndSub
+
+Sub IntercambiarBotones
+  If estadoSecond = 0 Then
+    estadoSecond = 1
+    Controls.HideControl(cuadrado)
+    Controls.HideControl(raiz2)
+    Controls.HideControl(potencia)
+    Controls.HideControl(potenciadies)
+    Controls.HideControl(log)
+    Controls.HideControl(ln)
+    Controls.HideControl(fraccion)
+    Controls.ShowControl(cubo)
+    Controls.ShowControl(raiz3)
+    Controls.ShowControl(raizy)
+    Controls.ShowControl(potenciados)
+    Controls.ShowControl(logyx)
+    Controls.ShowControl(ex)
+    Controls.ShowControl(fracciony)
+  Else
+    estadoSecond = 0
+    Controls.ShowControl(cuadrado)
+    Controls.ShowControl(raiz2)
+    Controls.ShowControl(potencia)
+    Controls.ShowControl(potenciadies)
+    Controls.ShowControl(log)
+    Controls.ShowControl(ln)
+    Controls.ShowControl(fraccion)
+    Controls.HideControl(cubo)
+    Controls.HideControl(raiz3)
+    Controls.HideControl(raizy)
+    Controls.HideControl(potenciados)
+    Controls.HideControl(logyx)
+    Controls.HideControl(ex)
+    Controls.HideControl(fracciony)
+  EndIf
+EndSub
+Sub IntercambiarBotones2
+  If estadotrigo = 0 Then 
+    estadotrigo = 1
+    Controls.HideControl(cos)
+    Controls.HideControl(anticos)
+    Controls.ShowControl(sen)
+    Controls.ShowControl(antisen)
+    Controls.HideControl(tan)
+    Controls.HideControl(antitan)
+  ElseIf estadotrigo = 1 Then 
+    estadotrigo = 2
+    Controls.HideControl(cos)
+    Controls.HideControl(anticos)
+    Controls.HideControl(sen)
+    Controls.HideControl(antisen)
+    Controls.ShowControl(tan)
+    Controls.ShowControl(antitan)
+    
+  ElseIf estadotrigo = 2 Then 
+    estadotrigo = 0
+    Controls.ShowControl(cos)
+    Controls.ShowControl(anticos)
+    Controls.HideControl(sen)
+    Controls.HideControl(antisen)
+    Controls.HideControl(tan)
+    Controls.HideControl(antitan)
+  EndIf
+EndSub
+
+' --- SUBRUTINAS DE NÚMEROS ---
+Sub boton1
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "1"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "1"))  
+EndSub
+Sub boton2
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "2"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "2")) 
+EndSub
+Sub boton3
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "3"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "3")) 
+EndSub
+Sub boton4
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "4"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "4")) 
+EndSub
+Sub boton5
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "5"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "5")) 
+EndSub
+Sub boton6
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "6"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "6")) 
+EndSub
+Sub boton7
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "7"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "7")) 
+EndSub
+Sub boton8
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "8"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "8")) 
+EndSub
+Sub boton9
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "9"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "9")) 
+EndSub
+Sub boton0
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "0"))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), "0")) 
+EndSub
+
+'pi y eulet
+
+Sub botonpi
+  operador1 = 3.14159265358979
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), operador1))
+  Controls.SetTextBoxText(proceso, operador1)
+EndSub
+Sub botone 
+  e = 2.718281828459045
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), e))
+  Controls.SetTextBoxText(proceso, e)
+EndSub
+
+'Trigonometria
+
+Sub botoncos
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.Cos(operador1)
+  Controls.SetTextBoxText(proceso, "cos(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+Sub botonsen
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.Sin(operador1)
+  Controls.SetTextBoxText(proceso, "sin(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+Sub botontan
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.Tan(operador1)
+  Controls.SetTextBoxText(proceso, "tan(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+Sub botonanticos
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.ArcCos(operador1)
+  Controls.SetTextBoxText(proceso, "cos⁻¹(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+Sub botonantisen
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.ArcSin(operador1)
+  Controls.SetTextBoxText(proceso, "sen⁻¹(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+Sub botonantitan
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.ArcTan(operador1)
+  Controls.SetTextBoxText(proceso, "tan⁻¹(" + operador1 + ") =")
+  Controls.SetTextBoxText(caja, total)
+EndSub
+
+
+'Especiales
+Sub botoncuadrado
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(proceso,operador1 + "² =")
+  operador1 = operador1 * operador1
+  Controls.SetTextBoxText(caja,operador1)
+
+EndSub
+Sub botonraiz2
+  operador1 = Controls.GetTextBoxText(caja)
+  operador2 = Math.SquareRoot(operador1)
+  Controls.SetTextBoxText(caja,operador2)
+  Controls.SetTextBoxText(proceso, "²√" + operador1 + " =")
+EndSub
+Sub botonpotencia
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja,"")
+  operadorpotencia = 1
+  Controls.SetTextBoxText(proceso, operador1 + "^")
+EndSub
+Sub botonpotenciadies
+  operador1 = Controls.GetTextBoxText(caja)
+  total = Math.Power(10,operador1)
+  Controls.SetTextBoxText(caja,total)
+  Controls.SetTextBoxText(proceso, "10^" + operador1 + " =")
+EndSub
+Sub botonlog
+  operador1 = Controls.GetTextBoxText(caja)
+  If operador1 = "" Or operador1 <= 0 Then
+    Controls.SetTextBoxText(caja, "Error")
+    Controls.SetTextBoxText(proceso, "log(inválido)")
+  Else
+    Controls.SetTextBoxText(proceso, "log(" + operador1 + ")" + " =")   
+    operador1 = Math.Log(operador1)
+    Controls.SetTextBoxText(caja, operador1)
+  EndIf
+EndSub
+Sub botonln 
+  operador1 = Controls.GetTextBoxText(caja)
+  If operador1 = "" Or operador1 <= 0 Then
+    Controls.SetTextBoxText(caja, "Error")
+    Controls.SetTextBoxText(proceso, "ln(inválido)")
+  Else
+    Controls.SetTextBoxText(proceso, "ln(" + operador1 + ")" + " =")
+    operador1 = Math.NaturalLog(operador1)
+    Controls.SetTextBoxText(caja, operador1)
+  EndIf
+EndSub
+Sub botonfraccion
+  operador2 = Controls.GetTextBoxText(caja)
+  operador1 = 1 / operador2
+  Controls.SetTextBoxText(caja,operador1)
+  Controls.SetTextBoxText(proceso, "1/" + operador2 + " =")
+EndSub
+Sub botonabsoluto
+  If operador1 > 1 Then
+    If operador1 < 0 Then
+    Controls.SetTextBoxText(proceso, "|" + operador1 + "| =")
+    operador1 = operador1 * (-1)
+    Controls.SetTextBoxText(caja,operador1)
+  Else
+    Controls.SetTextBoxText(proceso, "|" + operador1 + "| =")
+    Controls.SetTextBoxText(caja,operador1)
+  EndIf
+  Else
+  operador1 = Controls.GetTextBoxText(caja)
+  If operador1 < 0 Then
+    Controls.SetTextBoxText(proceso, "|" + operador1 + "| =")
+    operador1 = operador1 * (-1)
+    Controls.SetTextBoxText(caja,operador1)
+  Else
+    Controls.SetTextBoxText(proceso, "|" + operador1 + "| =")
+    Controls.SetTextBoxText(caja,operador1)
+  EndIf
+EndIf
+EndSub
+Sub botonfactorial
+  operador1 = Controls.GetTextBoxText(caja)
+  operador2 = 1
+  For i = 1 To operador1
+    operador2 = operador2 * i
+  EndFor
+  Controls.SetTextBoxText(caja, operador2 )
+  Controls.SetTextBoxText(proceso, operador2 )
+EndSub
+
+'Botones Second
+Sub botoncubo
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(proceso, operador1 + "³ = ")
+  operador1 = operador1 * operador1 * operador1 
+  Controls.SetTextBoxText(caja, operador1)
+EndSub
+Sub botonraiz3
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(proceso, "³√" + operador1 + " =" )
+  operador1 = Math.Power(operador1, 1/3)
+  Controls.SetTextBoxText(caja, operador1)
+EndSub
+Sub botonraizy
+  operador1 = Controls.GetTextBoxText(caja)
+  operadorraiz = 1
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, operador1 + "√")
+EndSub
+Sub botonpotenciados
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(proceso, "2^" + operador1 + " = " )
+  operador1 = Math.Power(2,operador1)
+  Controls.SetTextBoxText(caja,operador1)
+EndSub
+Sub botonlogy
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, "log_" + operador1 + "(")
+  operadorlogy = 1
+EndSub
+Sub botonex
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(proceso,"e^" + operador1 + " =" )
+  operador1 = Math.Power(2.7182818284590452353602874713527,operador1)
+  Controls.SetTextBoxText(caja,operador1)
+EndSub
+Sub botonfracciony
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, operador1 + " / " )
+  operadorfracciony = 1
+EndSub
+Sub botonpunto
+  Controls.SetTextBoxText(caja, Text.Append(Controls.GetTextBoxText(caja), "."))
+  Controls.SetTextBoxText(proceso, Text.Append(Controls.GetTextBoxText(proceso), ".")) 
+EndSub
+' OPERACIONES
+Sub botonmas
+  operador1 = Controls.GetTextBoxText(caja)
+  If OperadorParentesis = 1 Then
+  Controls.SetTextBoxText(caja, operador1)   
+  Controls.SetTextBoxText(proceso, operador1 + " + " )
+  Controls.SetTextBoxText(caja, "")
+  Else
+  Controls.SetTextBoxText(proceso, operador1 + " + " )
+  operadorSuma = 1
+  operadorResta = 0
+  operadorMultiplicacion = 0
+  operadorDivision = 0
+  Controls.SetTextBoxText(caja, "")
+EndIf
+EndSub
+Sub botonresta
+  If OperadorParentesis = 1 Then
+  Controls.SetTextBoxText(proceso, operador1)   
+  Controls.SetTextBoxText(proceso, operador1 + " - " )
+  EndIf
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, operador1 + " - " )
+  operadorResta = 1
+  operadorSuma = 0
+  operadorMultiplicacion = 0
+  operadorDivision = 0
+EndSub
+
+Sub botonMultiplicacion
+  If OperadorParentesis = 1 Then
+  Controls.SetTextBoxText(proceso, operador1)   
+  Controls.SetTextBoxText(proceso, operador1 + " X " )
+  EndIf
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, operador1 + " X " )
+  operadorMultiplicacion = 1
+  operadorSuma = 0
+  operadorResta = 0
+  operadorDivision = 0
+EndSub
+
+Sub botonDivision
+  If OperadorParentesis = 1 Then
+  Controls.SetTextBoxText(proceso, operador1)   
+  Controls.SetTextBoxText(proceso, operador1 + " / " )
+  EndIf
+  operador1 = Controls.GetTextBoxText(caja)
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, operador1 + " / " )
+  operadorDivision = 1
+  operadorSuma = 0
+  operadorResta = 0
+  operadorMultiplicacion = 0
+EndSub
+
+Sub botonBT
+  operador1 = ""
+  Controls.SetTextBoxText(caja, "")
+  Controls.SetTextBoxText(proceso, "")
+EndSub
+Sub botonC
+  contenido_caja = Controls.GetTextBoxText(caja)
+  contenido_proceso = Controls.GetTextBoxText(proceso)
+  largo = Text.GetLength(contenido_caja)
+  largo2 = Text.GetLength(contenido_proceso)
+ If largo > 0 Then
+   caracter = Text.GetSubText(contenido_caja, 1, largo - 1)
+   Controls.SetTextBoxText(caja,caracter)
+   caracter2 = Text.GetSubText(contenido_caja, 1, largo - 1)
+   Controls.SetTextBoxText(proceso,caracter2)
+   EndIf
+EndSub
+Sub botonIgual
+  operador2 = Controls.GetTextBoxText(caja)
+  operacionRealizada = 0
+  If operadorSuma = 1 Then
+    total = operador1 + operador2
+    Controls.SetTextBoxText(proceso, operador1 + " + " + operador2 + " = ")
+    operadorSuma = 0 
+    operacionRealizada = 1
+  ElseIf operadorResta = 1 then
+    total = operador1 - operador2
+    Controls.SetTextBoxText(proceso, operador1 + " - " + operador2 + " = ")
+    operadorResta = 0
+    operacionRealizada = 1
+  ElseIf operadorMultiplicacion = 1 then
+    total = operador1 * operador2
+    Controls.SetTextBoxText(proceso, operador1 + " X " + operador2 + " = ")
+    operadorMultiplicacion = 0
+    operacionRealizada = 1
+  ElseIf operadorDivision = 1 then
+    If operador2 = 0 Then
+       Controls.SetTextBoxText(caja, "No se puede divir entre cero")
+    Else
+        total = operador1 / operador2
+        Controls.SetTextBoxText(proceso, operador1 + " / " + operador2 + " = ")
+    EndIf
+    operadorDivision = 0
+    operacionRealizada = 1
+  EndIf
+  If operadorpotencia = 1 Then
+    total = Math.Power(operador1, operador2 )
+    Controls.SetTextBoxText(proceso, operador1 + "^" + operador2 + " =")
+    operadorpotencia = 0
+    operacionRealizada = 1
+  EndIf
+  If OperadorParentesis = 1 Then
+    total = Controls.GetTextBoxText(proceso)
+    Controls.SetTextBoxText(caja, total)
+  EndIf
+  If operadorraiz = 1 Then
+    total = Math.Power(operador2, 1/operador1)
+    operadorraiz = 0
+    operacionRealizada = 1
+  EndIf
+  If operadorlogy = 1 Then
+    operador2 = Controls.GetTextBoxText(caja)
+    total = Math.Log(operador1) / Math.Log(operador2)
+    Controls.SetTextBoxText(proceso, "log_" + operador1 + "(" + operador2 + ") = ")
+    operadorlogy = 0
+    operacionRealizada = 1
+  EndIf   
+  If operadorfracciony = 1 Then
+    operador2 = Controls.GetTextBoxText(caja)
+    If operador2 = 0 Then
+      Controls.SetTextBoxText(caja, "No se puede divir entre cero")
+    Else
+      Controls.SetTextBoxText(proceso, operador1 + " / " + operador2 + " = " )
+    total = operador1 / operador2
+    EndIf
+    operadorfracciony = 0
+    operacionRealizada = 1
+  EndIf
+  If operacionRealizada = 1 Then
+    Controls.SetTextBoxText(caja, total)
+  EndIf
+EndSub
